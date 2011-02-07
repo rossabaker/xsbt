@@ -18,10 +18,9 @@ trait SourceProject extends BasicScalaProject with NoCrossPaths
 {
 	override def packagePaths = mainResources +++ mainSources // the default artifact is a jar of the main sources and resources
 }
-trait ManagedBase extends BasicScalaProject
+trait ManagedBase extends BasicScalaProject with PublishToFusesource
 {
 	override def deliverScalaDependencies = Nil
-	override def managedStyle = ManagedStyle.Ivy
 	override def useDefaultConfigurations = false
 	val defaultConf = Configurations.Default
 	val testConf = Configurations.Test

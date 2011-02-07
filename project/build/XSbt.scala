@@ -2,7 +2,7 @@ import sbt._
 
 import java.io.File
 
-class XSbt(info: ProjectInfo) extends ParentProject(info) with NoCrossPaths
+class XSbt(info: ProjectInfo) extends ParentProject(info) with NoCrossPaths with PublishToFusesource
 {
 		/* Subproject declarations*/
 
@@ -54,10 +54,6 @@ class XSbt(info: ProjectInfo) extends ParentProject(info) with NoCrossPaths
 	override def shouldCheckOutputDirectories = false
 
 	def jlineDep = "jline" % "jline" % "0.9.94" intransitive()
-
-	// publish locally when on repository server
-	override def managedStyle = ManagedStyle.Ivy
-	val publishTo = Resolver.file("test-repo", new File("/var/dbwww/repo/"))
 
 		/* Subproject configurations*/
 	class LaunchProject(info: ProjectInfo) extends Base(info) with TestWithIO with TestDependencies with ProguardLaunch with NoCrossPaths

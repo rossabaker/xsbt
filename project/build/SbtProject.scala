@@ -6,7 +6,7 @@ import sbt._
 import java.io.File
 import java.net.URL
 
-abstract class SbtProject(info: ProjectInfo) extends DefaultProject(info) with test.SbtScripted with posterous.Publish with Sxr
+abstract class SbtProject(info: ProjectInfo) extends DefaultProject(info) with test.SbtScripted with PublishToFusesource with Sxr
 {
 	/* Additional resources to include in the produced jar.*/
 	def extraResources = descendents(info.projectPath / "licenses", "*") +++ "LICENSE" +++ "NOTICE"
@@ -15,8 +15,6 @@ abstract class SbtProject(info: ProjectInfo) extends DefaultProject(info) with t
 	override def testOptions = ExcludeTests("sbt.ReflectiveSpecification" :: Nil) :: super.testOptions.toList
 	override def normalizedName = "sbt"
 
-	override def managedStyle = ManagedStyle.Ivy
-	//val publishTo = Resolver.file("technically", new File("/var/dbwww/repo/"))
 	val technically = Resolver.url("technically.us", new URL("http://databinder.net/repo/"))(Resolver.ivyStylePatterns)
 
 	override def compileOptions = CompileOption("-Xno-varargs-conversion") :: Nil

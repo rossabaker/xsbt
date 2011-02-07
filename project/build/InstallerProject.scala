@@ -13,7 +13,7 @@ abstract class InstallerProject(info: ProjectInfo) extends ParentProject(info) w
 
 import java.nio.charset.Charset
 
-protected class InstallPluginProject(info: ProjectInfo, extract: => InstallExtractProject) extends PluginProject(info)
+protected class InstallPluginProject(info: ProjectInfo, extract: => InstallExtractProject) extends PluginProject(info) with PublishToFusesource
 {
 	private lazy val extractProject = extract
 	override def mainResources = super.mainResources +++ extractProject.outputJar +++ extractLocation
@@ -23,6 +23,5 @@ protected class InstallPluginProject(info: ProjectInfo, extract: => InstallExtra
 	override def packageAction = super.packageAction dependsOn(extractProject.proguard, writeProperties)
 	
 	override def deliverProjectDependencies = Nil
-	val publishTo = "Scala Tools Nexus" at "http://nexus.scala-tools.org/content/repositories/releases/"
 	Credentials(Path.fromFile(System.getProperty("user.home")) / ".ivy2" / ".credentials", log)
 }
